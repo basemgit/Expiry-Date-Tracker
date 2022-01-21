@@ -16,5 +16,17 @@
     <fragment
         android:id="@+id/scannerFragment"
         android:name="com.basemibrahim.expirydatetracker.ui.ScannerFragment"
-        android:label="@string/Scan_product" />
+        android:label="@string/Scan_product" >
+        <action
+            android:id="@+id/action_scannerFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.basemibrahim.expirydatetracker.ui.ProductDetailsFragment"
+        android:label="@string/add_product">
+        <argument
+            android:name="barcode"
+            app:argType="string" />
+    </fragment>
 </navigation>

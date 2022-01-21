@@ -4,4 +4,10 @@
     <string name="scanned_items">Scanned Items</string>
     <string name="Scan_product">Scan a product</string>
     <string name="please_grant_permission">Please grant the permission to use the app</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_barcode">Product barcode</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_type">Product Type</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="save">Save</string>
 </resources>
