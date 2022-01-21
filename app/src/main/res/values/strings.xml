@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ExpiryDateTracker</string>
+    <string name="check_expired_items">Check Expired Items</string>
+    <string name="scanned_items">Scanned Items</string>
+    <string name="Scan_product">Scan a product</string>
+    <string name="please_grant_permission">Please grant the permission to use the app</string>
 </resources>
