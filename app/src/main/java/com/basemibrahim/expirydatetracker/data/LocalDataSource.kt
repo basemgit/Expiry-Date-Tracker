@@ -19,6 +19,13 @@ class LocalDataSource @Inject constructor(private val productDao: ProductDao) {
        }
     }
 
+    suspend  fun deleteProduct (product: Product) {
+        withContext(Dispatchers.IO)
+        {
+            productDao.delete(product)
+        }
+    }
+
     suspend fun getProducts() : Flow<List<Product>> {
         var products : Flow<List<Product>>
         withContext(Dispatchers.IO)

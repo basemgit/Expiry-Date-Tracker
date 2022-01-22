@@ -1,9 +1,7 @@
 package com.basemibrahim.expirydatetracker.data
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import android.content.ClipData
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,5 +12,8 @@ interface ProductDao {
 
     @Query("SELECT * from product ORDER BY expiry_date ASC")
     fun getProducts(): Flow<List<Product>>
+
+    @Delete
+    suspend fun delete(product: Product)
 
 }

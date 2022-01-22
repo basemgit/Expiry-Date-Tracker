@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.basemibrahim.expirydatetracker.databinding.FragmentHomeBinding
 import com.basemibrahim.expirydatetracker.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment: Fragment() {
@@ -40,7 +41,20 @@ private val mainViewModel : MainViewModel by activityViewModels()
     {
         binding.pbDog.visibility = View.VISIBLE
         mainViewModel.getProductsList()
+        checkExpiration()
         binding.pbDog.visibility = View.GONE
+    }
+    fun checkExpiration()
+    {
+        mainViewModel.products.observe(viewLifecycleOwner){
+            for(product in it)
+            {
+                if(Date().after(product.expiryDate))
+                {
+                    mainViewModel.deleteProduct(product)
+                }
+            }
+        }
     }
 
 }

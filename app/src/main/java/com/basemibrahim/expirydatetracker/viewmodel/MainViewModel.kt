@@ -26,6 +26,9 @@ class MainViewModel @Inject constructor
     fun insertItem(product: Product) = viewModelScope.launch {
         repository.insertProduct(product)
     }
+    fun deleteProduct(product: Product) = viewModelScope.launch {
+        repository.deleteProduct(product)
+    }
 
     fun isEntryValid(productName: String, productType: String, expiryDate: Date?): Boolean {
         if (productName.isBlank() || productType.isBlank() || expiryDate == null ) {
