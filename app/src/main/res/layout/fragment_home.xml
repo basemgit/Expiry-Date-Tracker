@@ -5,7 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     >
-    <data></data>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.basemibrahim.expirydatetracker.viewmodel.MainViewModel" />
+
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,7 +30,7 @@
             android:id="@+id/list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="6dp"
+            android:padding="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +38,7 @@
             app:layout_constraintTop_toBottomOf="@id/checkExpiredItems"
             tools:listitem="@layout/grid_view_item"
             android:layout_marginTop="16dp"
+            app:list="@{viewModel.products}"
             />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

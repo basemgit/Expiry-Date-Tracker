@@ -56,7 +56,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun inputData() {
-        binding.dateET.setOnClickListener {
+        binding.pickDate.setOnClickListener {
             val cldr: Calendar = Calendar.getInstance()
             val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
             val month: Int = cldr.get(Calendar.MONTH)
@@ -94,6 +94,7 @@ class ProductDetailsFragment : Fragment() {
                     }
                 if (newProduct != null) {
                     mainViewModel.insertItem(newProduct)
+                    navigateToHome()
                 }
             } else {
                 Toast.makeText(requireContext(),getString(R.string.fill_fields), Toast.LENGTH_SHORT).show()

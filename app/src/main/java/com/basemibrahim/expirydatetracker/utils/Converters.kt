@@ -7,19 +7,13 @@ import java.util.*
 
 
 class Converters {
-
     @TypeConverter
-    fun fromDate(value: Date): String {
-        val gson = Gson()
-        val type = object : TypeToken<Date>() {}.type
-        return gson.toJson(value, type)
+    fun fromTimestamp(value: Long?): Date? {
+        return if (value == null) null else Date(value)
     }
 
     @TypeConverter
-    fun toDate(value: String): Date {
-        val gson = Gson()
-        val type = object : TypeToken<Date>() {}.type
-        return gson.fromJson(value, type)
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
     }
-
 }

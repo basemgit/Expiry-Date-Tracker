@@ -14,7 +14,7 @@ object Utils {
 
      fun dateToString(aDate: Date?, aFormat: String): String? {
         if (aDate == null) return null
-        val aDate = Date()
+       // val aDate = Date()
         val simpledateformat = SimpleDateFormat(aFormat)
         return simpledateformat.format(aDate)
     }
