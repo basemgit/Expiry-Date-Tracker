@@ -6,24 +6,34 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.basemibrahim.expirydatetracker.R
+import com.basemibrahim.expirydatetracker.data.Product
 import com.basemibrahim.expirydatetracker.databinding.FragmentProductDetailsBinding
 import com.basemibrahim.expirydatetracker.utils.Constants.BARCODE
+import com.basemibrahim.expirydatetracker.utils.Utils
+import com.basemibrahim.expirydatetracker.viewmodel.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
+    private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentProductDetailsBinding
     private lateinit var barcode: String
-    private lateinit var picker: DatePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
             barcode = it.getString(BARCODE).toString()
-
+        }
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+           navigateToHome()
         }
     }
 
@@ -41,10 +51,11 @@ class ProductDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.barcode.text = getString(R.string.product_barcode).plus(" : ").plus(barcode)
         binding.dateET.inputType = InputType.TYPE_NULL
-        handleInput()
+        inputData()
+        handleSaveBtn()
     }
 
-    private fun handleInput() {
+    private fun inputData() {
         binding.dateET.setOnClickListener {
             val cldr: Calendar = Calendar.getInstance()
             val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
@@ -53,9 +64,9 @@ class ProductDetailsFragment : Fragment() {
 
             val dpd = DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                { view, year, monthOfYear, dayOfMonth ->
                     binding.dateET.setText(
-                        dayOfMonth.toString().plus("/").plus(monthOfYear + 1).plus("/").plus(year)
+                        dayOfMonth.toString().plus("-").plus(monthOfYear + 1).plus("-").plus(year)
                     )
 
                 },
@@ -69,4 +80,40 @@ class ProductDetailsFragment : Fragment() {
 
         }
     }
+
+    fun handleSaveBtn() {
+        binding.saveProduct.setOnClickListener {
+            if (isEntryValid()) {
+                val newProduct =
+                    Utils.stringToDate(binding.dateET.text.toString(), "dd-MM-yyyy")?.let { date ->
+                        Product(
+                            productName = binding.productNameET.text.toString(),
+                            productType = binding.productTypeET.text.toString(),
+                            expiryDate = date
+                        )
+                    }
+                if (newProduct != null) {
+                    mainViewModel.insertItem(newProduct)
+                }
+            } else {
+                Toast.makeText(requireContext(),getString(R.string.fill_fields), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    private fun isEntryValid(): Boolean {
+        return mainViewModel.isEntryValid(
+            binding.productNameET.text.toString(),
+            binding.productTypeET.text.toString(),
+            Utils.stringToDate(binding.dateET.text.toString(), "dd-MM-yyyy")
+        )
+    }
+
+    private fun navigateToHome()
+    {
+        val aciton = ProductDetailsFragmentDirections.actionProductDetailsFragmentToHomeFragment()
+        binding.root.findNavController().navigate(aciton)
+    }
+
 }

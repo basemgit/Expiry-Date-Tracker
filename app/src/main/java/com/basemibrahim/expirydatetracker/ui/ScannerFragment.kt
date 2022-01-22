@@ -10,25 +10,37 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.basemibrahim.expirydatetracker.R
 import com.basemibrahim.expirydatetracker.databinding.FragmentScannerBinding
 import com.budiyev.android.codescanner.*
+import dagger.hilt.android.AndroidEntryPoint
+import android.content.Intent
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.basemibrahim.expirydatetracker.viewmodel.MainViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 
+@AndroidEntryPoint
 class ScannerFragment : Fragment() {
     private lateinit var binding: FragmentScannerBinding
     private lateinit var codeScanner: CodeScanner
     private var permissionGranted = false
-    lateinit var navController:NavController
-
+    lateinit var navController: NavController
+    lateinit var barcode: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val navHostFragment = activity?.supportFragmentManager
-            ?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +48,9 @@ class ScannerFragment : Fragment() {
     ): View? {
         binding = FragmentScannerBinding.inflate(inflater)
         binding.lifecycleOwner = this
+        val navHostFragment = activity?.supportFragmentManager
+            ?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.findNavController()
         return binding.root
     }
 
@@ -84,8 +99,8 @@ class ScannerFragment : Fragment() {
     }
 
     override fun onPause() {
-        codeScanner.releaseResources()
         super.onPause()
+        codeScanner.releaseResources()
     }
 
     override fun onResume() {
@@ -123,8 +138,10 @@ class ScannerFragment : Fragment() {
         }
 
     private fun navigateToDetails(barcode: String) {
-        val aciton = ScannerFragmentDirections.actionScannerFragmentToProductDetailsFragment(barcode = barcode)
-        navController.navigate(aciton)
+        val action =
+            ScannerFragmentDirections.actionScannerFragmentToProductDetailsFragment(barcode = barcode)
+        if (navController.currentDestination?.id == R.id.scannerFragment)
+            navController.navigate(action)
     }
 
 }
