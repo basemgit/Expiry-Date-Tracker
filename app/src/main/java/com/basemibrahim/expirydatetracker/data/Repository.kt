@@ -14,6 +14,9 @@ class Repository @Inject constructor(
     suspend fun insertProduct(product: Product) {
         localDataSource.insertProduct(product)
     }
+    suspend fun insertExpiredProduct(expiredProduct: ExpiredProduct) {
+        localDataSource.insertExpiredProduct(expiredProduct)
+    }
     suspend fun deleteProduct(product: Product) {
         localDataSource.deleteProduct(product)
     }
@@ -21,6 +24,10 @@ class Repository @Inject constructor(
     suspend fun getProducts() : Flow<List<Product>>
     {
       return  localDataSource.getProducts()
+    }
+    suspend fun getExpiredProducts() : Flow<List<ExpiredProduct>>
+    {
+      return  localDataSource.getExpiredProducts()
     }
 
 

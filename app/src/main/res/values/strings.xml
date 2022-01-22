@@ -12,4 +12,6 @@
     <string name="save">Save</string>
     <string name="fill_fields">Please fill all fields</string>
     <string name="pick_a_date">Pick a date</string>
+    <string name="products">Products</string>
+    <string name="expired_products">Expired Products</string>
 </resources>

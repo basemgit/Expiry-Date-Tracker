@@ -7,7 +7,7 @@ import java.util.*
 
 
 @Entity
-data class Product(
+data class ExpiredProduct(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "name")
@@ -16,9 +16,5 @@ data class Product(
     val productType: String,
     @ColumnInfo(name = "expiry_date")
     val expiryDate: Date
-)
-
-fun Product.toExpiredProduct() = ExpiredProduct(
-    id,productName,productType,expiryDate
 )
 

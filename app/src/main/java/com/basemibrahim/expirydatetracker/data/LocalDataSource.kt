@@ -10,12 +10,20 @@ import javax.inject.Singleton
 
 
 @Singleton
-class LocalDataSource @Inject constructor(private val productDao: ProductDao) {
+class LocalDataSource @Inject constructor(private val productDao: ProductDao,
+private val expiredProductDao: ExpiredProductDao) {
 
     suspend  fun insertProduct (product: Product) {
        withContext(Dispatchers.IO)
        {
            productDao.insert(product)
+       }
+    }
+
+    suspend  fun insertExpiredProduct (expiredProduct: ExpiredProduct) {
+       withContext(Dispatchers.IO)
+       {
+           expiredProductDao.insertExpiredProduct(expiredProduct)
        }
     }
 
@@ -33,6 +41,15 @@ class LocalDataSource @Inject constructor(private val productDao: ProductDao) {
             products = productDao.getProducts()
         }
         return products
+    }
+
+    suspend fun getExpiredProducts() : Flow<List<ExpiredProduct>> {
+        var expiredProducts : Flow<List<ExpiredProduct>>
+        withContext(Dispatchers.IO)
+        {
+            expiredProducts = expiredProductDao.getExpiredProducts()
+        }
+        return expiredProducts
     }
 
 

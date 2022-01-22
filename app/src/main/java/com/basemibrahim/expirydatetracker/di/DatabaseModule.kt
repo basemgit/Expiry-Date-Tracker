@@ -3,6 +3,7 @@ package com.basemibrahim.expirydatetracker.di
 import android.content.Context
 import androidx.room.Room
 import com.basemibrahim.expirydatetracker.data.AppDatabase
+import com.basemibrahim.expirydatetracker.data.ExpiredProductDao
 import com.basemibrahim.expirydatetracker.data.ProductDao
 import dagger.Module
 import dagger.Provides
@@ -15,8 +16,13 @@ import javax.inject.Singleton
 @Module
 object DatabaseModule {
     @Provides
-    fun provideLogDao(database: AppDatabase): ProductDao {
+    fun provideProductDao(database: AppDatabase): ProductDao {
         return database.productDao()
+    }
+
+    @Provides
+    fun provideExpiredProductDao(database: AppDatabase): ExpiredProductDao {
+        return database.expiredProductDao()
     }
 
     @Provides

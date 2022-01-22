@@ -8,11 +8,14 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.basemibrahim.expirydatetracker.ui.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="@string/products">
         <action
             android:id="@+id/action_homeFragment_to_scannerFragment"
             app:destination="@id/scannerFragment"
             app:launchSingleTop="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_expiredProductsFragment"
+            app:destination="@id/expiredProductsFragment" />
     </fragment>
     <fragment
         android:id="@+id/scannerFragment"
@@ -34,4 +37,8 @@
             android:id="@+id/action_productDetailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/expiredProductsFragment"
+        android:name="com.basemibrahim.expirydatetracker.ui.ExpiredProductsFragment"
+        android:label="@string/expired_products" />
 </navigation>
