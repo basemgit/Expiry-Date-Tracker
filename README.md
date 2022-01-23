@@ -4,11 +4,11 @@ Tech stack :
 Architecture components  
 Navigation components  
 Data Binding  
-coroutine
-flow
-Room  
-Hilt  
-Braodcast Receiver
-Alarm Manager
-Local Notifications
+coroutine  
+flow  
+Room    
+Hilt    
+Braodcast Receiver  
+Alarm Manager  
+Local Notifications  
 Ui Testing 
